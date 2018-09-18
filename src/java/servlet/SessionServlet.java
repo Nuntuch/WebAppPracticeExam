@@ -8,7 +8,6 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Nuntuch Thongyoo
  */
-public class CookieServlet extends HttpServlet {
+public class SessionServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,45 +30,17 @@ public class CookieServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try {
-
-            String text = request.getParameter("text"); //2. รับพารามิเตอร์มา
-            if (text != null) {//เช็คว่า text เป็น null ไหม
-                Cookie ck = new Cookie("ckname", text);//3.create obj cookie เพื่อรับค่า request ใส่ cookie
-                ck.setMaxAge(55555);//เช็ตอายุคุ๊กกี้
-                response.addCookie(ck); //4. send cookie to ผู้ใช้
-
-            } else {//ถ้าเป็น null
-                Cookie[] ck = request.getCookies();// เก็บ cookie ไว้หลายชิ้น
-
-                if (ck != null) {//ถ้า cookie มีค่า
-                    for (int i = 0; i < ck.length; i++) {
-                        if (ck[i].getName().equals("ckname")) {//เช็คว่า คุ๊กกี้ชิ้นไหนในกล่องที่จะทาน
-                            text = ck[i].getValue();//5. เก็บค่าของcookieลงตัวแปีน text  กรณี 1.cookie เก็บ obj เดียว
-                        }
-                    }
-
-                }
-
-            }
-            
-            request.setAttribute("name", text);
-            getServletContext().getRequestDispatcher("/cookieview.jsp").forward(request, response);
-
-        } catch (Exception e) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            PrintWriter out = response.getWriter();
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CookieServlet</title>");
+            out.println("<title>Servlet SessionServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CookieServlet at " + request.getContextPath() + "</h1>");
-            out.println("<h1>Servlet ERROR !!! " + e + "</h1>");
+            out.println("<h1>Servlet SessionServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-
         }
     }
 
