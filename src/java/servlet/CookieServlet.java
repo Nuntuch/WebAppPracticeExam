@@ -33,27 +33,51 @@ public class CookieServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try {
 
-            String text = request.getParameter("text"); //2. รับพารามิเตอร์มา
-            if (text != null) {//เช็คว่า text เป็น null ไหม
-                Cookie ck = new Cookie("ckname", text);//3.create obj cookie เพื่อรับค่า request ใส่ cookie
-                ck.setMaxAge(55555);//เช็ตอายุคุ๊กกี้
-                response.addCookie(ck); //4. send cookie to ผู้ใช้
+//            String text = request.getParameter("text"); //2. รับพารามิเตอร์มา
+//            if (text != null) {//เช็คว่า text เป็น null ไหม
+//                Cookie ck = new Cookie("ckname", text);//3.create obj cookie เพื่อรับค่า request ใส่ cookie
+////                ck.setMaxAge(55555);//เช็ตอายุคุ๊กกี้
+//                response.addCookie(ck); //4. send cookie to ผู้ใช้
+//
+//            } else {//ถ้าเป็น null
+//                Cookie[] ck = request.getCookies();// เก็บ cookie ไว้หลายชิ้น
+//
+//                if (ck != null) {//ถ้า cookie มีค่า
+//                    for (int i = 0; i < ck.length; i++) {
+//                        if (ck[i].getName().equals("ckname")) {//เช็คว่า คุ๊กกี้ชิ้นไหนในกล่องที่จะทาน
+//                            text = ck[i].getValue();//5. เก็บค่าของcookieลงตัวแปีน text  กรณี 1.cookie เก็บ obj เดียว
+//                        }
+//                    }
+//
+//                }
+//
+//            }
+//            
+//            request.setAttribute("name", text);
+//            getServletContext().getRequestDispatcher("/cookieview.jsp").forward(request, response);
+            String bnkgen = request.getParameter("bnkgen");
+            String music = request.getParameter("music");
+            String idol = request.getParameter("idol");
 
-            } else {//ถ้าเป็น null
-                Cookie[] ck = request.getCookies();// เก็บ cookie ไว้หลายชิ้น
+            if (bnkgen != null) {
+                Cookie bnkgencookie = new Cookie("bnkgen", bnkgen);
+                response.addCookie(bnkgencookie);
 
-                if (ck != null) {//ถ้า cookie มีค่า
-                    for (int i = 0; i < ck.length; i++) {
-                        if (ck[i].getName().equals("ckname")) {//เช็คว่า คุ๊กกี้ชิ้นไหนในกล่องที่จะทาน
-                            text = ck[i].getValue();//5. เก็บค่าของcookieลงตัวแปีน text  กรณี 1.cookie เก็บ obj เดียว
+            } else {
+                Cookie[] bnkgencookie = request.getCookies(); //find cookie ที่ต้องการจาก cookie ทั้งหมด
+                if (bnkgencookie != null) { //ถ้ามีคุกกี้อยู่ในระบบก็ไปหา
+                    for (int i = 0; i < bnkgencookie.length; i++) {
+                        if (bnkgencookie[i].getName().equals("benkgen")) {//หาว่าใช้คุ๊กกิ้ที่เราหาไหม
+                            bnkgen = bnkgencookie[i].getValue();
                         }
                     }
 
                 }
 
             }
+            request.setAttribute("bnkgen", bnkgen);
             
-            request.setAttribute("name", text);
+            
             getServletContext().getRequestDispatcher("/cookieview.jsp").forward(request, response);
 
         } catch (Exception e) {
