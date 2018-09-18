@@ -7,6 +7,8 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -16,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Nuntuch Thongyoo
  */
-public class SessionServlet extends HttpServlet {
+public class RequestParamServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -29,7 +31,37 @@ public class SessionServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
- 
+response.setContentType("text/html;charset=UTF-8");
+        try {
+
+            String bnkgenpara = request.getParameter("bnkgen");
+            String idolpara = request.getParameter("idol");
+            String musicpara = request.getParameter("music");
+            String[] nomusicpara = request.getParameterValues("nomusic");
+            
+            List<String> nomusicparaList = new ArrayList();
+            
+            for (String nomusicparaf : nomusicpara) {
+                nomusicparaList.add(nomusicparaf);
+            }
+            
+           
+
+        } catch (Exception e) {
+            /* TODO output your page here. You may use following sample code. */
+            PrintWriter out = response.getWriter();
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet SessionServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet SessionServlet at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ERROR !!! " + e + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

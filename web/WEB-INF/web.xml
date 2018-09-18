@@ -8,6 +8,10 @@
         <servlet-name>SessionServlet</servlet-name>
         <servlet-class>servlet.SessionServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>RequestParamServlet</servlet-name>
+        <servlet-class>servlet.RequestParamServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CookieServlet</servlet-name>
         <url-pattern>/Cookie</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>SessionServlet</servlet-name>
         <url-pattern>/Session</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RequestParamServlet</servlet-name>
+        <url-pattern>/RequestParam</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
